@@ -1,0 +1,36 @@
+@page "/logging"
+@using Serilog
+@using Microsoft.Extensions.Logging
+@inject ILogger<Logging> Logger
+
+<h3>Logging</h3>
+
+<h5>To see the logs you need to open DevTools > Console tab.</h5>
+<br>
+<div class="row mt-3">
+    <button class="btn btn-info " @onclick="LogWithConsoleWriteLine">Log with Console</button>
+</div>
+<div class="row mt-3">
+    <button class="btn btn-secondary" @onclick="LogWithILogger">Log with ILogger</button>
+</div>
+<div class="row mt-3">
+    <button class="btn btn-primary" @onclick="LogMessage">Log with Serilog</button>
+</div>
+<div class="row mt-3">
+    <button class="btn btn-warning" @onclick="LogWarning">Log with Serilog - warning</button>
+</div>
+<div class="row mt-3">
+    <button class="btn btn-danger" @onclick="LogError">Log with Serilog -  danger</button>
+</div>
+
+
+
+@code
+{
+    private void LogWithConsoleWriteLine() => Console.WriteLine("Hello Console.");
+    private void LogWithILogger() => Logger.LogInformation("Warning from ILogger. Default in .net core.");
+    private void LogMessage() => Log.Information("Information Message");
+    private void LogWarning()=>Log.Warning("Warning Message");
+    private void LogError() => Log.Error("OMG its on fire!");
+
+}

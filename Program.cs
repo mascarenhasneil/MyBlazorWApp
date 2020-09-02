@@ -1,12 +1,10 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace BlazorApp1Test
 {
@@ -18,6 +16,15 @@ namespace BlazorApp1Test
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            // Create Serilog logger with BrowserConsole sink
+			Log.Logger = new LoggerConfiguration()
+				.MinimumLevel.Debug()
+				.WriteTo.BrowserConsole()
+				.CreateLogger();
+
+            builder.Services.AddLogging(builder => builder
+				.SetMinimumLevel(LogLevel.Trace));
 
             await builder.Build().RunAsync();
         }
