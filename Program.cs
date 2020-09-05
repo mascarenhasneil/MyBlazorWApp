@@ -25,8 +25,9 @@ namespace BlazorApp1Test
 				.WriteTo.BrowserConsole()
 				.CreateLogger();
 
-            builder.Services.AddLogging(builder => builder
-				.SetMinimumLevel(LogLevel.Trace));
+            // This Serice displays Logs to the DevTools Console. It should not be used in production.
+            //builder.Services.AddLogging(builder => builder
+			//	.SetMinimumLevel(LogLevel.Trace));
 
             builder.Services.AddSingleton<MarkdownPipeline>(
 					sp => new MarkdownPipelineBuilder()
