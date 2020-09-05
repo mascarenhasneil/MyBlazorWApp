@@ -1,0 +1,23 @@
+@page "/invokecallback"
+
+<div class="row">
+    <div class="cols-3 w-100 p-2">
+        <h3>@Title</h3>
+        <h5>@Description</h5>
+    </div>
+     <div class="cols-3 w-100 p-2">
+        <button class="btn btn-primary" 
+              @onclick="@(() => OnClick.InvokeAsync(Title))" >Ship It</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; } = "Product Detail";
+
+    [Parameter]
+    public string Description { get; set; } ="Description";
+
+    [Parameter]
+    public EventCallback<string> OnClick { get; set; }
+}
