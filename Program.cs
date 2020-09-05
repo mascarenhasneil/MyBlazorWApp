@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Markdig;
+using Markdig.SyntaxHighlighting;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -25,6 +27,12 @@ namespace BlazorApp1Test
 
             builder.Services.AddLogging(builder => builder
 				.SetMinimumLevel(LogLevel.Trace));
+
+            builder.Services.AddSingleton<MarkdownPipeline>(
+					sp => new MarkdownPipelineBuilder()
+						.UseAdvancedExtensions()    // to add other adv. extensions to markdown.  
+						.UseSyntaxHighlighting()    // to hight code syntax in its output.
+						.Build());    
 
             await builder.Build().RunAsync();
         }

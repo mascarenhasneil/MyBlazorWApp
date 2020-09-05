@@ -1,0 +1,49 @@
+@page "/MarkdownEditor"
+@using Markdig
+@inject MarkdownPipeline Pipeline
+@using Serilog
+
+<h2>Blazor Markdown Editor in C#</h2>
+
+<div class="row" style="height: 500px;">
+    <div class="col-6 h-100">
+        <textarea class="form-control h-100" @bind-value="MarkdownText" @bind-value:event="oninput"></textarea>
+    </div>
+    <div class="col-6 h-100">
+        @((MarkupString) HtmlToRender)  
+    </div> 
+</div>
+
+@code {
+    public string MarkdownText { get; set; } = initialText; // Initialising the Markdowntext is not necessery
+    //public string MarkdownText { get; set; } ;            // you can toggle this statement and it will work just like before. 
+
+    
+    public string HtmlToRender
+    {
+        get
+        {
+            try
+            {
+               return Markdown.ToHtml(MarkdownText ?? string.Empty, Pipeline);
+                
+            }
+            catch (NullReferenceException e)
+            {
+                // todo: Log the errors! 
+                Log.Error(e, "Couldn't render markdown text! Something went wrong.");
+            }
+
+            return string.Empty;
+        }
+    }
+
+    private static string initialText = @"### Remove this default markdown or add some more. 
+##### This is implemented by using the below NuGet packages.
+    
+```cs
+using Markdig;
+using Markdig.SyntaxHighlighting;
+```";
+    
+}
