@@ -1,0 +1,54 @@
+@page "/jsinterop"
+@inject IJSRuntime JSRuntime; /* Wondering what makes it work? Here. This injects java runtime to Blazor. */
+
+<h1>Calling JavaScript Function with a on-click event. Example</h1>
+
+<div class="row mt-5">
+    <button type="button" class="btn btn-primary" @onclick="CallJs">
+        Click to Call a JS function
+    </button>
+</div>
+
+@if(!string.IsNullOrWhiteSpace(jsText))
+{
+    <div class="row mt-2">
+        <p>
+            <span><strong>JavaScript said:</strong> @jsText</span>
+        </p>
+    </div>
+    <div class="row mt-10">
+    <button type="button" class="btn btn-success" @onclick="CallBlazor">
+        Click to Call a Blazor function
+    </button>
+</div>
+
+}
+
+@if(!string.IsNullOrWhiteSpace(blazorText))
+{
+    <div class="row mt-2">
+        <p>
+            <span><strong>Blazor said:</strong> @blazorText</span>
+        </p>
+    </div>
+
+}
+
+
+@code {
+    private string jsText = string.Empty;
+    private string blazorText = string.Empty;
+
+    private async Task CallJs()
+    {
+        jsText = await JSRuntime.InvokeAsync<string>("ReplyToDotNet");
+        // The Javascript is added to the "index.html" file. Its not compulsory. 
+        // I just intent to keep the code clean. All scripts and CSS addded to index file.
+        // You can add it here as well if you find it troublesome adding it to index.html
+    }
+
+    private void CallBlazor()
+    {
+        blazorText= "Sure, Let's be best friends!! ♥";
+    }
+}

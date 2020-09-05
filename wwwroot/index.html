@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <app>Loa wait for it! ding...</app>
+    <app>Load wait for it! ding...</app>
 
     <div id="blazor-error-ui">
         An unhandled error has occurred.
@@ -19,6 +19,14 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+    
+    <script> // javascript interop is here.
+        window.ReplyToDotNet = () => {
+            return 'I love you Blazor! Can we be friends?';
+        }
+    </script>
+
+
 </body>
 
 </html>
