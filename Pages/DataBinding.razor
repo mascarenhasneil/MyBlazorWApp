@@ -1,0 +1,25 @@
+@page "/dataBinding"
+
+<h1>@(Title == string.Empty ? "Data Binding Try entering some text in below text fields" : Title)</h1>
+<br>
+<div class="row" style="height: 500px;">
+    <div class="col-6 h-100">
+        <p>
+            <span>Reflects when the input box loses focus. <strong>on-focus event</strong></span>
+            <input type="text-area" @bind="Title" style="width: 100%;"/>
+        </p>
+    </div>
+
+    <div class="col-6 h-100">
+        <p>
+            <span>Reflects as the input box receives input. <strong>on-input event.</strong></span>
+            <input type="text-area" @bind="Title" @bind:event="oninput" style="width: 100%;"/>
+        </p>
+    </div>
+</div>
+
+
+
+@code {
+    private string Title = string.Empty;
+}
